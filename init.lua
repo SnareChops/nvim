@@ -168,7 +168,13 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', '<C-s>', '<cmd>w<CR><ESC>')
 vim.keymap.set('v', '<C-s>', '<cmd>w<CR><ESC>')
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>')
-
+-- move line up / down
+vim.keymap.set('n', '<A-j>', '<cmd>:m+<CR>==')
+vim.keymap.set('n', '<A-k>', '<cmd>:m-2<CR>==')
+vim.keymap.set('i', '<A-j>', '<ESC><cmd>:m+<CR>==gi')
+vim.keymap.set('i', '<A-k>', '<ESC><cmd>:m-2<CR>==gi')
+vim.keymap.set('v', '<A-j>', "<cmd>:m '>+1<CR>gv=gv")
+vim.keymap.set('v', '<A-k>', "<cmd>:m '<-2<CR>gv=gv")
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -790,6 +796,7 @@ require('lazy').setup({
   { 'xiyaowong/transparent.nvim' },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'github/copilot.vim' },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
