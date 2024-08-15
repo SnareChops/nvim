@@ -84,6 +84,10 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -797,6 +801,23 @@ require('lazy').setup({
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   { 'github/copilot.vim' },
+  {
+    'nvim-tree/nvim-tree.lua',
+    opts = {
+      disable_netrw = true,
+      sync_root_with_cwd = true,
+    },
+    lazy = false,
+    config = function()
+      require('nvim-tree').setup {
+        disable_netrw = true,
+        sync_root_with_cwd = true,
+      }
+      vim.cmd [[hi NvimTreeNormal guibg=NONE ctermbg=NONE]]
+      vim.cmd [[hi NvimTreeNormalNC guibg=NONE ctermbg=NONE]]
+      require('nvim-tree.api').tree.open()
+    end,
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
