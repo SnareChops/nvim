@@ -163,6 +163,12 @@ vim.opt.tabstop = 4
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 
+if vim.fn.has 'win32' == 1 or vim.fn.has 'win64' == 1 then
+  vim.opt.shell = 'powershell.exe'
+else
+  vim.opt.shell = 'zsh'
+end
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -377,6 +383,9 @@ require('lazy').setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          file_ignore_patterns = { '\\.env.*' },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -631,7 +640,15 @@ require('lazy').setup({
       }
     end,
   },
-
+  { -- Neogit
+    'NeogitOrg/neogit',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    config = true,
+  },
   { -- Autoformat
     'stevearc/conform.nvim',
     lazy = false,
