@@ -158,8 +158,8 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
-vim.opt.shiftwidth = 4
-vim.opt.tabstop = 4
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
 vim.opt.expandtab = true
 vim.opt.smarttab = true
 
@@ -569,6 +569,9 @@ require('lazy').setup({
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
+      if (capabilities.workspace or {}).didChangeWatchedFiles then
+        capabilities.workspace.didChangeWatchedFiles = nil
+      end
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       -- Enable the following language servers
@@ -647,6 +650,7 @@ require('lazy').setup({
       'sindrets/diffview.nvim',
       'nvim-telescope/telescope.nvim',
     },
+    opts = {},
     config = true,
   },
   { -- Autoformat
