@@ -185,6 +185,8 @@ vim.keymap.set('i', '<A-j>', '<ESC><cmd>:m+<CR>==gi')
 vim.keymap.set('i', '<A-k>', '<ESC><cmd>:m-2<CR>==gi')
 vim.keymap.set('v', '<A-j>', "<cmd>:m '>+1<CR>gv=gv")
 vim.keymap.set('v', '<A-k>', "<cmd>:m '<-2<CR>gv=gv")
+vim.diagnostic.config { virtual_text = true }
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -588,8 +590,8 @@ require('lazy').setup({
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
-        -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
+        -- But for many setups, the LSP (`ts_ls`) will work just fine
+        ts_ls = {},
         --
 
         lua_ls = {
@@ -615,6 +617,21 @@ require('lazy').setup({
         vim.lsp.enable(server_name)
       end
     end,
+  },
+  {
+    'kdheepak/lazygit.nvim',
+    lazy = true,
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<leader>lg', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
   },
   { -- Neogit
     'NeogitOrg/neogit',
@@ -774,7 +791,7 @@ require('lazy').setup({
     end,
   },
   -- THEME
-  { 'nyoom-engineering/oxocarbon.nvim' },
+  { 'Ferouk/bearded-nvim', name = 'bearded' },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
   { -- Surround Plugin
@@ -923,7 +940,7 @@ require('lazy').setup({
 })
 
 vim.opt.background = 'dark'
-vim.cmd.colorscheme = 'oxocarbon'
+vim.cmd.colorscheme 'bearded-black-&-amethyst'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
